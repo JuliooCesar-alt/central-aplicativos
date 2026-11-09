@@ -1,0 +1,594 @@
+﻿[
+  {
+    "Grupo": "Navegadores",
+    "Nome": "Google Chrome",
+    "Id": "Google.Chrome",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Navegadores",
+    "Nome": "Brave",
+    "Id": "Brave.Brave",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Navegadores",
+    "Nome": "Microsoft Edge",
+    "Id": "Microsoft.Edge",
+    "Tipo": "Normal",
+    "Nota": "Normalmente instalado no Windows.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Navegadores",
+    "Nome": "Mozilla Firefox",
+    "Id": "Mozilla.Firefox",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Navegadores",
+    "Nome": "Opera",
+    "Id": "Opera.Opera",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Compactadores",
+    "Nome": "7-Zip",
+    "Id": "7zip.7zip",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Compactadores",
+    "Nome": "WinRAR",
+    "Id": "RARLab.WinRAR",
+    "Tipo": "Normal",
+    "Nota": "Uso continuado requer licenca.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Microsoft Defender (abrir painel)",
+    "Id": "",
+    "Tipo": "Painel",
+    "Nota": "Ja integrado ao Windows; nao instala outro antivirus.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Bitdefender (agente)",
+    "Id": "Bitdefender.Bitdefender",
+    "Tipo": "Antivirus",
+    "Nota": "Pode instalar apenas o agente; verificar licenca e etapas finais.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Avast Free Antivirus (uso pessoal)",
+    "Id": "Avast Free Antivirus",
+    "Tipo": "BuscaNomeAV",
+    "Nota": "Licenca pessoal; pacote pode nao existir no WinGet.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "AVG AntiVirus Free (uso pessoal)",
+    "Id": "AVG AntiVirus Free",
+    "Tipo": "BuscaNomeAV",
+    "Nota": "Licenca pessoal; pacote pode nao existir no WinGet.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Malwarebytes",
+    "Id": "Malwarebytes.Malwarebytes",
+    "Tipo": "Antivirus",
+    "Nota": "Pode ativar protecao em tempo real no periodo de teste; verificar licenciamento.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "ClamWin (verificador)",
+    "Id": "ClamWin.ClamWin",
+    "Tipo": "Scanner",
+    "Nota": "Verificador sob demanda; nao substitui protecao residente.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "ClamAV (motor de verificacao)",
+    "Id": "Cisco.ClamAV",
+    "Tipo": "Scanner",
+    "Nota": "Exige configuracao tecnica adicional.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Malwarebytes AdwCleaner",
+    "Id": "Malwarebytes.AdwCleaner",
+    "Tipo": "Scanner",
+    "Nota": "Ferramenta de verificacao sob demanda.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "SUPERAntiSpyware",
+    "Id": "SUPERAntiSpyware.SUPERAntiSpyware",
+    "Tipo": "Scanner",
+    "Nota": "Verificador de malware; conferir licenciamento.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Seguranca",
+    "Nome": "Autoruns (Sysinternals)",
+    "Id": "Microsoft.Sysinternals.Autoruns",
+    "Tipo": "Normal",
+    "Nota": "Ferramenta administrativa para diagnostico.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "PDF e Escritorio",
+    "Nome": "SumatraPDF",
+    "Id": "SumatraPDF.SumatraPDF",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "PDF e Escritorio",
+    "Nome": "Adobe Acrobat Reader 64-bit",
+    "Id": "Adobe.Acrobat.Reader.64-bit",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "PDF e Escritorio",
+    "Nome": "LibreOffice",
+    "Id": "TheDocumentFoundation.LibreOffice",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "PDF e Escritorio",
+    "Nome": "ONLYOFFICE Desktop Editors",
+    "Id": "ONLYOFFICE.DesktopEditors",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "PDF e Escritorio",
+    "Nome": "Foxit PDF Reader",
+    "Id": "Foxit.FoxitReader",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Notepad++",
+    "Id": "Notepad++.Notepad++",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Microsoft PowerToys",
+    "Id": "Microsoft.PowerToys",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Everything",
+    "Id": "voidtools.Everything",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Visual Studio Code",
+    "Id": "Microsoft.VisualStudioCode",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "WinMerge",
+    "Id": "WinMerge.WinMerge",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "AnyDesk",
+    "Id": "AnyDeskSoftwareGmbH.AnyDesk",
+    "Tipo": "Normal",
+    "Nota": "Acesso remoto: configurar autenticacao e permissao.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "TeamViewer",
+    "Id": "TeamViewer.TeamViewer",
+    "Tipo": "Normal",
+    "Nota": "Uso empresarial pode exigir licenca comercial.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Windows App",
+    "Id": "Microsoft.WindowsApp",
+    "Tipo": "Normal",
+    "Nota": "Cliente Microsoft para desktops e recursos remotos.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "UltraVNC",
+    "Id": "uvncbvba.UltraVnc",
+    "Tipo": "Normal",
+    "Nota": "Acesso remoto: nao habilitar sem configuracao de seguranca.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "WireGuard",
+    "Id": "WireGuard.WireGuard",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "Revo Uninstaller",
+    "Id": "RevoUninstaller.RevoUninstaller",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "CCleaner",
+    "Id": "Piriform.CCleaner",
+    "Tipo": "Normal",
+    "Nota": "Verificar licenca; evite limpeza automatica de registro.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "VLC Media Player",
+    "Id": "VideoLAN.VLC",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "OBS Studio",
+    "Id": "OBSProject.OBSStudio",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "Audacity",
+    "Id": "Audacity.Audacity",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "iTunes",
+    "Id": "Apple.iTunes",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "K-Lite Codec Pack (Full)",
+    "Id": "CodecGuide.K-LiteCodecPack.Full",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "Spotify",
+    "Id": "Spotify.Spotify",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Multimidia",
+    "Nome": "HandBrake",
+    "Id": "HandBrake.HandBrake",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Comunicacao",
+    "Nome": "Zoom Workplace",
+    "Id": "Zoom.Zoom",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Comunicacao",
+    "Nome": "Discord",
+    "Id": "Discord.Discord",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Comunicacao",
+    "Nome": "Microsoft Teams",
+    "Id": "Microsoft.Teams",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Comunicacao",
+    "Nome": "Telegram Desktop",
+    "Id": "Telegram.TelegramDesktop",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Comunicacao",
+    "Nome": "WhatsApp Desktop",
+    "Id": "WhatsApp.WhatsApp",
+    "Tipo": "Normal",
+    "Nota": "Pode depender de requisitos da Microsoft Store/Windows.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Python 3 x64",
+    "Id": "Python.Python.3.14",
+    "Tipo": "Normal",
+    "Nota": "Escolha apenas uma variante de Python 3.",
+    "Arquitetura": "x64"
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Python 3 ARM64",
+    "Id": "Python.Python.3.14",
+    "Tipo": "Normal",
+    "Nota": "Apenas PCs com processador ARM64.",
+    "Arquitetura": "arm64"
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Python 3 (automatico)",
+    "Id": "Python.Python.3.14",
+    "Tipo": "Normal",
+    "Nota": "WinGet escolhe arquitetura do computador.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Python (versao atual)",
+    "Id": "Python.Python.3.14",
+    "Tipo": "Normal",
+    "Nota": "Mesmo pacote Python 3; escolha apenas uma variante.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Git",
+    "Id": "Git.Git",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "GitHub Desktop",
+    "Id": "GitHub.GitHubDesktop",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Docker Desktop",
+    "Id": "Docker.DockerDesktop",
+    "Tipo": "Normal",
+    "Nota": "Requer virtualizacao; verificar requisitos e licenca.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Node.js 22",
+    "Id": "OpenJS.NodeJS.22",
+    "Tipo": "Normal",
+    "Nota": "Instale somente a versao necessaria ao projeto.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Node.js 24",
+    "Id": "OpenJS.NodeJS.24",
+    "Tipo": "Normal",
+    "Nota": "Instale somente a versao necessaria ao projeto.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Node.js 26",
+    "Id": "OpenJS.NodeJS.26",
+    "Tipo": "Normal",
+    "Nota": "Instale somente a versao necessaria ao projeto.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "FileZilla",
+    "Id": "TimKosse.FileZilla.Client",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "Sublime Text 4",
+    "Id": "SublimeHQ.SublimeText.4",
+    "Tipo": "Normal",
+    "Nota": "Licenca de uso continuado pode ser necessaria.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Desenvolvimento",
+    "Nome": "PuTTY",
+    "Id": "PuTTY.PuTTY",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Imagem e Design",
+    "Nome": "Krita",
+    "Id": "KDE.Krita",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Imagem e Design",
+    "Nome": "Blender",
+    "Id": "BlenderFoundation.Blender",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Imagem e Design",
+    "Nome": "Paint.NET",
+    "Id": "dotPDN.PaintDotNet",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Imagem e Design",
+    "Nome": "GIMP",
+    "Id": "GIMP.GIMP",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Imagem e Design",
+    "Nome": "Inkscape",
+    "Id": "Inkscape.Inkscape",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Impressao 3D",
+    "Nome": "Bambu Studio",
+    "Id": "Bambulab.Bambustudio",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Impressao 3D",
+    "Nome": "UltiMaker Cura",
+    "Id": "Ultimaker.Cura",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Armazenamento",
+    "Nome": "Dropbox",
+    "Id": "Dropbox.Dropbox",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Armazenamento",
+    "Nome": "Google Drive para computador",
+    "Id": "Google.GoogleDrive",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Armazenamento",
+    "Nome": "Microsoft OneDrive",
+    "Id": "Microsoft.OneDrive",
+    "Tipo": "Normal",
+    "Nota": "",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Componentes",
+    "Nome": ".NET Framework 4.8.1 (runtime)",
+    "Id": "Microsoft.DotNet.Framework.Runtime",
+    "Tipo": "Normal",
+    "Nota": "Ja incluido em muitas instalacoes do Windows 11; instale somente se necessario.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Componentes",
+    "Nome": ".NET Desktop Runtime 8",
+    "Id": "Microsoft.DotNet.DesktopRuntime.8",
+    "Tipo": "Normal",
+    "Nota": "Instale se um programa exigir esta versao.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Componentes",
+    "Nome": "Java 8 (Temurin JDK)",
+    "Id": "EclipseAdoptium.Temurin.8.JDK",
+    "Tipo": "Normal",
+    "Nota": "Versao antiga. Apenas para programas que realmente exijam Java 8.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Componentes",
+    "Nome": "Microsoft VC++ 2015+ x64",
+    "Id": "Microsoft.VCRedist.2015+.x64",
+    "Tipo": "Normal",
+    "Nota": "Bibliotecas redistribuiveis de programas de 64 bits.",
+    "Arquitetura": ""
+  },
+  {
+    "Grupo": "Componentes",
+    "Nome": "Microsoft VC++ 2015+ x86",
+    "Id": "Microsoft.VCRedist.2015+.x86",
+    "Tipo": "Normal",
+    "Nota": "Bibliotecas redistribuiveis de programas de 32 bits.",
+    "Arquitetura": ""
+  }
+]

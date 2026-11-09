@@ -1,0 +1,21 @@
+CENTRAL DE APLICATIVOS v8 - WINDOWS (PowerShell + WinGet)
+========================================================
+1. Extraia o ZIP inteiro em uma pasta nova.
+2. Revise o codigo antes de executar, especialmente em computador corporativo.
+3. Rode Iniciar-Central.cmd. Caso o arquivo tenha marca de Internet,
+   o iniciador perguntara se voce deseja desbloquear apenas esse .ps1.
+4. Selecione um programa e clique em BAIXAR APENAS para testar sem instalar.
+5. O botao BAIXAR E INSTALAR executa winget install com confirmacao.
+6. Para um teste isolado use Testar-Download-7Zip.cmd.
+7. Logs detalhados em %%TEMP%%\CentralApps-v8-*
+IMPORTANTE:
+- A barra superior conta pacotes finalizados; a inferior mostra atividade
+  indeterminada, pois o WinGet nem sempre fornece percentual por pacote.
+- O status por aplicativo e baseado no codigo do WinGet e no texto do log.
+  'Ja instalado' so aparece quando o WinGet confirma esse estado.
+- O catalogo se edita diretamente em catalogo.json, sem mudar o .ps1.
+- Nao instale simultaneamente antivirus residentes.
+- Avast/AVG Free podem nao ter licenca de uso empresarial ou pacote WinGet.
+- Scripts nao assinados podem ser bloqueados por politicas de TI.
+- Nao contorne politicas corporativas obrigatorias.
+- Este pacote nao foi testado em Windows real nesta sessao. Teste inicialmente em uma maquina de laboratorio.
