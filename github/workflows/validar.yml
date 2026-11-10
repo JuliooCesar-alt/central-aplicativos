@@ -1,0 +1,22 @@
+name: Validar catálogo e PowerShell
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validar:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testar sintaxe PowerShell 5.1
+        shell: powershell
+        run: .\ferramentas\validar-script.ps1
+      - name: Validar catálogo
+        shell: pwsh
+        run: python ferramentas/validar_catalogo.py
+      - name: Criar ZIP de teste
+        shell: pwsh
+        run: python ferramentas/empacotar.py
