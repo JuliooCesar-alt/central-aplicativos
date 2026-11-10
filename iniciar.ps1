@@ -1,79 +1,88 @@
-﻿# Verificacao de versao em tempo de execucao para ser compativel com Invoke-Expression
-<#
-Central de Aplicativos - iniciador via GitHub Releases.
-Publicar este arquivo em 'main/iniciar.ps1' para permitir um comando unico no PowerShell.
-ATENCAO: revise o codigo antes de executar. A release deve ser publica.
-Nao desativa nem contorna politicas de execucao.
-#>
 $ErrorActionPreference = 'Stop'
-if ($PSVersionTable.PSVersion.Major -lt 5) { throw 'Windows PowerShell 5.1 ou superior e necessario.' }
+if ($PSVersionTable.PSVersion.Major -lt 5) {
+    throw 'Este iniciador exige Windows PowerShell 5.1 ou superior.'
+}
+
 $repositorio = 'JulioCesar-alt/central-aplicativos'
 $nomePacote = 'Central-de-Aplicativos-Windows.zip'
 $nomeSomas = 'SHA256SUMS.txt'
-
-if ($repositorio -match '^SEU-USUARIO/' -or $repositorio -notmatch '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$') {
-    throw 'Configure $repositorio no arquivo iniciar.ps1 com USUARIO/REPOSITORIO antes de publicar.'
-}
-if ($PSVersionTable.PSEdition -ne 'Desktop' -and $env:OS -ne 'Windows_NT') {
-    throw 'Este iniciador destina-se ao Windows.'
-}
-
-$base = "https://github.com/$repositorio/releases/latest/download"
-$temporario = Join-Path ([IO.Path]::GetTempPath()) ('CentralApps-' + [guid]::NewGuid().ToString('N'))
+$api = "https://api.github.com/repos/$repositorio/releases/latest"
+$temporario = Join-Path ([System.IO.Path]::GetTempPath()) ('CentralApps-' + [guid]::NewGuid().ToString('N'))
 $zipPath = Join-Path $temporario $nomePacote
 $somasPath = Join-Path $temporario $nomeSomas
-$diretorioExtraido = Join-Path $temporario 'pacote'
+$extraido = Join-Path $temporario 'pacote'
 
 try {
     [void](New-Item -ItemType Directory -Path $temporario -Force)
-    # TLS 1.2 necessario em alguns ambientes antigos do Windows PowerShell 5.1.
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+    $cabecalhos = @{ 'User-Agent' = 'Central-de-Aplicativos'; 'Accept' = 'application/vnd.github+json' }
 
-    Write-Host "Repositorio: https://github.com/$repositorio" -ForegroundColor Cyan
-    Write-Host 'Consultando a release mais recente...' -ForegroundColor Cyan
-    Invoke-WebRequest -Uri "$base/$nomePacote" -OutFile $zipPath -UseBasicParsing -ErrorAction Stop
-    Invoke-WebRequest -Uri "$base/$nomeSomas" -OutFile $somasPath -UseBasicParsing -ErrorAction Stop
+    Write-Host ('Repositorio: https://github.com/' + $repositorio) -ForegroundColor Cyan
+    Write-Host 'Consultando a ultima release publicada pela API do GitHub...' -ForegroundColor Cyan
+    $release = Invoke-RestMethod -Uri $api -Headers $cabecalhos -UseBasicParsing -ErrorAction Stop
+    if (-not $release -or -not $release.tag_name) {
+        throw 'A API do GitHub nao retornou uma release publica valida.'
+    }
+    Write-Host ('Release encontrada: ' + $release.tag_name) -ForegroundColor Green
 
-    $somas = Get-Content -LiteralPath $somasPath -Raw -ErrorAction Stop
+    $assetZip = @($release.assets | Where-Object { $_.name -eq $nomePacote } | Select-Object -First 1)
+    $assetSomas = @($release.assets | Where-Object { $_.name -eq $nomeSomas } | Select-Object -First 1)
+    if ($assetZip.Count -eq 0 -or $assetSomas.Count -eq 0) {
+        $nomes = @($release.assets | ForEach-Object { $_.name }) -join ', '
+        throw ('A release ' + $release.tag_name + ' nao possui os dois anexos esperados. Assets encontrados: ' + $nomes)
+    }
+    if (-not $assetZip[0].browser_download_url -or -not $assetSomas[0].browser_download_url) {
+        throw 'A API nao retornou os enderecos de download dos anexos.'
+    }
+
+    Write-Host ('Baixando ' + $nomePacote + '...') -ForegroundColor Cyan
+    try {
+        Invoke-WebRequest -Uri $assetZip[0].browser_download_url -OutFile $zipPath -Headers $cabecalhos -UseBasicParsing -ErrorAction Stop
+        Invoke-WebRequest -Uri $assetSomas[0].browser_download_url -OutFile $somasPath -Headers $cabecalhos -UseBasicParsing -ErrorAction Stop
+    }
+    catch {
+        throw ('Falha no download da release ' + $release.tag_name + ': ' + $_.Exception.Message + '. Confira o acesso aos arquivos em ' + $release.html_url)
+    }
+
+    $textoSomas = Get-Content -LiteralPath $somasPath -Raw -Encoding UTF8 -ErrorAction Stop
     $padrao = '(?im)^([a-f0-9]{64})\s+Central-de-Aplicativos-Windows\.zip\s*$'
-    $correspondencia = [regex]::Match($somas, $padrao)
-    if (-not $correspondencia.Success) {
-        throw 'SHA256SUMS.txt nao possui o hash esperado do pacote ZIP.'
+    $combinacao = [regex]::Match($textoSomas, $padrao)
+    if (-not $combinacao.Success) {
+        throw 'O SHA256SUMS.txt nao contem o hash esperado para o ZIP.'
     }
-    $hashEsperado = $correspondencia.Groups[1].Value.ToUpperInvariant()
-    $hashObtido = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToUpperInvariant()
-    if ($hashEsperado -ne $hashObtido) {
-        throw 'O SHA-256 do pacote nao confere com o publicado. Execucao cancelada.'
+    $hashEsperado = $combinacao.Groups[1].Value.ToUpperInvariant()
+    $hashBaixado = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToUpperInvariant()
+    if ($hashBaixado -ne $hashEsperado) {
+        throw 'SHA-256 divergente: o programa nao sera executado.'
     }
-    Write-Host 'Integridade SHA-256 do download verificada.' -ForegroundColor Green
+    Write-Host 'SHA-256 do ZIP conferido.' -ForegroundColor Green
 
-    Expand-Archive -LiteralPath $zipPath -DestinationPath $diretorioExtraido -Force
-    $principal = Join-Path $diretorioExtraido 'Central-de-Aplicativos.ps1'
-    $catalogo = Join-Path $diretorioExtraido 'catalogo.json'
+    Expand-Archive -LiteralPath $zipPath -DestinationPath $extraido -Force -ErrorAction Stop
+    $principal = Join-Path $extraido 'Central-de-Aplicativos.ps1'
+    $catalogo = Join-Path $extraido 'catalogo.json'
     if (-not (Test-Path -LiteralPath $principal -PathType Leaf) -or -not (Test-Path -LiteralPath $catalogo -PathType Leaf)) {
-        throw 'Pacote incompleto: interface ou catalogo ausente.'
+        throw 'Pacote incompleto: arquivo principal ou catalogo ausente.'
     }
-    $dadosCatalogo = ConvertFrom-Json -InputObject (Get-Content -LiteralPath $catalogo -Raw -Encoding UTF8)
+    $itens = ConvertFrom-Json -InputObject (Get-Content -LiteralPath $catalogo -Raw -Encoding UTF8)
     $quantidade = 0
-    foreach ($aplicativo in $dadosCatalogo) { $quantidade++ }
-    if ($quantidade -lt 1) { throw 'Catalogo vazio; execucao cancelada.' }
+    foreach ($item in $itens) { $quantidade++ }
+    if ($quantidade -lt 1) { throw 'O catalogo esta vazio.' }
+    Write-Host ('Catalogo: ' + $quantidade + ' aplicativo(s).') -ForegroundColor Cyan
 
-    Write-Host ("Pacote: {0} aplicativo(s) no catalogo." -f $quantidade)
-    Write-Host 'O hash nao comprova quem publicou a release. Execute somente se confiar no repositorio.' -ForegroundColor Yellow
-    $resposta = Read-Host 'Autoriza abrir a Central de Aplicativos agora? (S/N)'
+    Write-Host 'AVISO: executar programas obtidos da internet envolve riscos. Revise o codigo e confie somente no repositorio sob seu controle.' -ForegroundColor Yellow
+    $resposta = Read-Host 'Abrir a Central agora? (S/N)'
     if ($resposta -notmatch '^(S|SIM)$') {
-        Write-Host 'Cancelado pelo usuario.'
+        Write-Host 'Abertura cancelada.'
         return
     }
-    # Novo processo STA para WinForms; mantem as restricoes de execucao do Windows.
     & powershell.exe -NoLogo -NoProfile -STA -File $principal
     if ($LASTEXITCODE -ne 0) {
-        Write-Warning ("A interface encerrou com codigo {0}. Consulte os logs locais." -f $LASTEXITCODE)
+        Write-Warning ('A Central encerrou com o codigo ' + $LASTEXITCODE + '.')
     }
 }
 catch {
     Write-Host ('ERRO: ' + $_.Exception.Message) -ForegroundColor Red
-    throw
+    Write-Host 'O iniciador nao alterou politicas de seguranca nem instalou aplicativos.' -ForegroundColor Yellow
 }
 finally {
     if (Test-Path -LiteralPath $temporario) {
