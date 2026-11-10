@@ -1,4 +1,4 @@
-﻿# Central de Aplicativos v8.2 - menu local para Windows 10/11
+﻿# Central de Aplicativos v8.3 - menu local para Windows 10/11
 # Requer WinGet para baixar e instalar. Sem site, sem dominio, sem servidor.
 # O TI deve conferir scripts e licencas antes de executar. Nao altera a politica de execucao global.
 param(
@@ -125,7 +125,7 @@ $script:statusPorApp = @{}
 $script:ultimoStatusWinget = ''
 $script:contador = 0
 $script:operacaoAtual = 'install'
-$script:session = Join-Path $env:TEMP ('CentralApps-v8.2-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+$script:session = Join-Path $env:TEMP ('CentralApps-v8.3-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
 [void](New-Item -ItemType Directory -Path $script:session -Force)
 $script:logFile = Join-Path $script:session 'Central.log'
 $script:pastaDownloads = Join-Path (Join-Path $env:USERPROFILE 'Downloads') 'CentralApps'
@@ -174,8 +174,11 @@ function DefinirStatus([string]$chave,[string]$descricao) {
 function Recontar {
     $number = [int]$script:marcados.Count
     $script:lblSelecionados.Text = "$number selecionado(s)"
-    $script:btnBaixar.Enabled = (-not $script:executando -and $number -gt 0)
-    $script:btnInstalar.Enabled = (-not $script:executando -and $number -gt 0)
+    $abaAplicativos = ($null -eq $script:tabs -or $script:tabs.SelectedIndex -eq 0)
+    $script:btnTodos.Enabled = (-not $script:executando -and $abaAplicativos)
+    $script:btnLimpar.Enabled = (-not $script:executando -and $abaAplicativos)
+    $script:btnBaixar.Enabled = (-not $script:executando -and $number -gt 0 -and $abaAplicativos)
+    $script:btnInstalar.Enabled = (-not $script:executando -and $number -gt 0 -and $abaAplicativos)
 }
 function ReestilizarCategorias {
     foreach ($ctrl in $script:grupoPanel.Controls) {
@@ -396,7 +399,7 @@ function Executar([string]$operacao) {
 
 # --- Interface: botoes de categoria, sem ListBox/SelectedIndex/SetSelected ---
 $form = New-Object System.Windows.Forms.Form
-$form.Text = 'Central de Aplicativos - TI | v8.2'
+$form.Text = 'Central de Aplicativos - TI | v8.3'
 $form.StartPosition = 'CenterScreen'
 $form.ClientSize = [System.Drawing.Size]::new(1120,730)
 $form.MinimumSize = [System.Drawing.Size]::new(880,620)
@@ -433,7 +436,93 @@ $center.Dock = 'Fill'; $center.ColumnCount = 2; $center.RowCount = 1
 $center.Margin = [System.Windows.Forms.Padding]::new(12,12,12,7)
 [void]$center.ColumnStyles.Add([System.Windows.Forms.ColumnStyle]::new([System.Windows.Forms.SizeType]::Absolute,210))
 [void]$center.ColumnStyles.Add([System.Windows.Forms.ColumnStyle]::new([System.Windows.Forms.SizeType]::Percent,100))
-$outer.Controls.Add($center,0,1)
+# Abas principais: a navegacao de aplicativos continua igual;
+# os avisos ficam em uma aba propria, sem interferir no catalogo.
+$script:tabs = New-Object System.Windows.Forms.TabControl
+$script:tabs.Dock = 'Fill'
+$script:tabs.Font = Fonte 10 $true
+$script:tabs.Margin = [System.Windows.Forms.Padding]::new(9,5,9,4)
+$script:tabs.Padding = [System.Drawing.Point]::new(18,7)
+$tabAplicativos = New-Object System.Windows.Forms.TabPage
+$tabAplicativos.Text = 'Aplicativos'
+$tabAplicativos.BackColor = $script:fundo
+$tabAplicativos.Padding = [System.Windows.Forms.Padding]::new(0)
+$tabAvisos = New-Object System.Windows.Forms.TabPage
+$tabAvisos.Text = 'Avisos e Licenças'
+$tabAvisos.BackColor = [System.Drawing.Color]::White
+$tabAvisos.Padding = [System.Windows.Forms.Padding]::new(0)
+[void]$script:tabs.TabPages.Add($tabAplicativos)
+[void]$script:tabs.TabPages.Add($tabAvisos)
+[void]$outer.Controls.Add($script:tabs,0,1)
+$center.Margin = [System.Windows.Forms.Padding]::new(8,10,8,6)
+$tabAplicativos.Controls.Add($center)
+
+# Conteudo informativo, separado da selecao de aplicativos.
+$avisoLayout = New-Object System.Windows.Forms.TableLayoutPanel
+$avisoLayout.Dock = 'Fill'
+$avisoLayout.Padding = [System.Windows.Forms.Padding]::new(25,16,25,15)
+$avisoLayout.BackColor = [System.Drawing.Color]::White
+$avisoLayout.ColumnCount = 1
+$avisoLayout.RowCount = 3
+[void]$avisoLayout.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Absolute,42))
+[void]$avisoLayout.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Absolute,49))
+[void]$avisoLayout.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Percent,100))
+$tabAvisos.Controls.Add($avisoLayout)
+$avisoTitulo = New-Object System.Windows.Forms.Label
+$avisoTitulo.Text = 'Avisos e Licenças de Terceiros'
+$avisoTitulo.Dock = 'Fill'
+$avisoTitulo.Font = Fonte 15 $true
+$avisoTitulo.ForeColor = $script:azulEscuro
+$avisoLayout.Controls.Add($avisoTitulo,0,0)
+$avisoResumo = New-Object System.Windows.Forms.Label
+$avisoResumo.Text = 'A Central facilita instalações; os direitos de uso de cada programa continuam definidos pelo fabricante.'
+$avisoResumo.Dock = 'Fill'
+$avisoResumo.Font = Fonte 10
+$avisoResumo.ForeColor = $script:cinza
+$avisoResumo.AutoEllipsis = $true
+$avisoLayout.Controls.Add($avisoResumo,0,1)
+$avisoTexto = New-Object System.Windows.Forms.RichTextBox
+$avisoTexto.Dock = 'Fill'
+$avisoTexto.ReadOnly = $true
+$avisoTexto.BorderStyle = 'None'
+$avisoTexto.TabStop = $false
+$avisoTexto.DetectUrls = $false
+$avisoTexto.ScrollBars = 'Vertical'
+$avisoTexto.BackColor = [System.Drawing.Color]::White
+$avisoTexto.ForeColor = $script:texto
+$avisoTexto.Font = Fonte 10
+$avisoTexto.Text = @'
+O QUE A CENTRAL FAZ
+A Central de Aplicativos é uma ferramenta independente que reúne programas e facilita downloads e instalações por meio do WinGet. O projeto não hospeda instaladores de terceiros, não modifica os programas e não fornece chaves ou ativações. Os downloads são obtidos das fontes cadastradas no WinGet.
+
+LICENÇAS E PROGRAMAS PAGOS
+Os aplicativos pertencem aos respectivos desenvolvedores. Instalar um programa não fornece licença nem concede direito automático de uso. Se houver versão paga, avaliação ou ativação, cabe ao usuário ou à organização adquirir a licença apropriada. Sem licença, o programa pode limitar recursos, expirar ou impedir o uso.
+
+PROGRAMAS GRATUITOS
+Gratuito para uso pessoal não significa necessariamente gratuito para uso empresarial. Confira os termos do fabricante antes de instalar ou utilizar o programa em um computador corporativo.
+
+DOWNLOAD E TERMOS
+A Central utiliza informações dos manifestos do WinGet. As fontes, os endereços e as versões podem mudar. Verifique a origem e as condições do fabricante. O WinGet pode aceitar acordos do pacote durante operações automatizadas; a confirmação na Central não substitui a leitura desses termos.
+
+INDEPENDÊNCIA
+A Central não representa, não é patrocinada e não possui vínculo oficial com os fabricantes. Nomes e marcas pertencem aos respectivos titulares.
+
+RESPONSABILIDADE E SEGURANÇA
+Antes de instalar, confirme se o programa é adequado ao computador, se a origem é confiável e se o uso é permitido. A Central não garante disponibilidade, segurança, funcionamento ou licenciamento de aplicativos de terceiros. Não são oferecidos meios para contornar licenças ou proteções.
+
+Na dúvida, consulte os termos oficiais do fabricante antes de continuar.
+'@
+$avisoLayout.Controls.Add($avisoTexto,0,2)
+foreach ($tituloAviso in @('O QUE A CENTRAL FAZ','LICENÇAS E PROGRAMAS PAGOS','PROGRAMAS GRATUITOS','DOWNLOAD E TERMOS','INDEPENDÊNCIA','RESPONSABILIDADE E SEGURANÇA')) {
+    $inicio = $avisoTexto.Text.IndexOf($tituloAviso,[System.StringComparison]::Ordinal)
+    if ($inicio -ge 0) {
+        $avisoTexto.Select($inicio,$tituloAviso.Length)
+        $avisoTexto.SelectionFont = Fonte 10.5 $true
+        $avisoTexto.SelectionColor = $script:azul
+    }
+}
+$avisoTexto.Select(0,0)
+$script:tabs.Add_SelectedIndexChanged({ Recontar })
 
 $side = New-Object System.Windows.Forms.Panel
 $side.Dock='Fill'; $side.BackColor=[System.Drawing.Color]::White
@@ -653,6 +742,6 @@ $form.Add_FormClosing({
 MostrarAplicativos
 Recontar
 $script:timer.Start()
-Log ("Central v8.2 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
+Log ("Central v8.3 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
 try { [void]$form.ShowDialog() }
 finally { $script:timer.Stop(); $script:timer.Dispose(); $form.Dispose() }
