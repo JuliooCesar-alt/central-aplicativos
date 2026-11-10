@@ -6,7 +6,7 @@ ATENCAO: revise o codigo antes de executar. A release deve ser publica.
 Nao desativa nem contorna politicas de execucao.
 #>
 $ErrorActionPreference = 'Stop'
-$repositorio = 'SEU-USUARIO/central-aplicativos' # EDITE apos criar seu repositorio publico
+$repositorio = 'JuliooCesar-alt/central-aplicativos' # EDITE apos criar seu repositorio publico
 $nomePacote = 'Central-de-Aplicativos-Windows.zip'
 $nomeSomas = 'SHA256SUMS.txt'
 
