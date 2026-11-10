@@ -1,4 +1,4 @@
-﻿#requires -Version 5.1
+﻿# Verificacao de versao em tempo de execucao para ser compativel com Invoke-Expression
 <#
 Central de Aplicativos - iniciador via GitHub Releases.
 Publicar este arquivo em 'main/iniciar.ps1' para permitir um comando unico no PowerShell.
@@ -6,7 +6,8 @@ ATENCAO: revise o codigo antes de executar. A release deve ser publica.
 Nao desativa nem contorna politicas de execucao.
 #>
 $ErrorActionPreference = 'Stop'
-$repositorio = 'JuliooCesar-alt/central-aplicativos' # EDITE apos criar seu repositorio publico
+if ($PSVersionTable.PSVersion.Major -lt 5) { throw 'Windows PowerShell 5.1 ou superior e necessario.' }
+$repositorio = 'JulioCesar-alt/central-aplicativos'
 $nomePacote = 'Central-de-Aplicativos-Windows.zip'
 $nomeSomas = 'SHA256SUMS.txt'
 
@@ -52,10 +53,12 @@ try {
     if (-not (Test-Path -LiteralPath $principal -PathType Leaf) -or -not (Test-Path -LiteralPath $catalogo -PathType Leaf)) {
         throw 'Pacote incompleto: interface ou catalogo ausente.'
     }
-    $itens = @(Get-Content -LiteralPath $catalogo -Raw -Encoding UTF8 | ConvertFrom-Json)
-    if ($itens.Count -lt 1) { throw 'Catalogo vazio; execucao cancelada.' }
+    $dadosCatalogo = ConvertFrom-Json -InputObject (Get-Content -LiteralPath $catalogo -Raw -Encoding UTF8)
+    $quantidade = 0
+    foreach ($aplicativo in $dadosCatalogo) { $quantidade++ }
+    if ($quantidade -lt 1) { throw 'Catalogo vazio; execucao cancelada.' }
 
-    Write-Host ("Pacote: {0} aplicativo(s) no catalogo." -f $itens.Count)
+    Write-Host ("Pacote: {0} aplicativo(s) no catalogo." -f $quantidade)
     Write-Host 'O hash nao comprova quem publicou a release. Execute somente se confiar no repositorio.' -ForegroundColor Yellow
     $resposta = Read-Host 'Autoriza abrir a Central de Aplicativos agora? (S/N)'
     if ($resposta -notmatch '^(S|SIM)$') {

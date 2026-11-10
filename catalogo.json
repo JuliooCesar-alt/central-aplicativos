@@ -1,11 +1,13 @@
-﻿[
+[
   {
     "Grupo": "Navegadores",
     "Nome": "Google Chrome",
     "Id": "Google.Chrome",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Navegadores",
@@ -13,7 +15,9 @@
     "Id": "Brave.Brave",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Navegadores",
@@ -21,7 +25,9 @@
     "Id": "Microsoft.Edge",
     "Tipo": "Normal",
     "Nota": "Normalmente instalado no Windows.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Navegadores",
@@ -29,7 +35,9 @@
     "Id": "Mozilla.Firefox",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Navegadores",
@@ -37,7 +45,9 @@
     "Id": "Opera.Opera",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Compactadores",
@@ -45,7 +55,9 @@
     "Id": "7zip.7zip",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Compactadores",
@@ -53,7 +65,9 @@
     "Id": "RARLab.WinRAR",
     "Tipo": "Normal",
     "Nota": "Uso continuado requer licenca.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Avaliar por ate 40 dias; uso posterior requer licenca. Confira os termos de download.",
+    "UrlLicenca": "https://www.rarlab.com/license.htm"
   },
   {
     "Grupo": "Seguranca",
@@ -61,7 +75,9 @@
     "Id": "",
     "Tipo": "Painel",
     "Nota": "Ja integrado ao Windows; nao instala outro antivirus.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Seguranca",
@@ -69,7 +85,9 @@
     "Id": "Bitdefender.Bitdefender",
     "Tipo": "Antivirus",
     "Nota": "Pode instalar apenas o agente; verificar licenca e etapas finais.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Instalador/agente nao concede licenca gratuita de seguranca empresarial.",
+    "UrlLicenca": "https://www.bitdefender.com/site/view/legal-terms.html"
   },
   {
     "Grupo": "Seguranca",
@@ -77,7 +95,9 @@
     "Id": "Avast Free Antivirus",
     "Tipo": "BuscaNomeAV",
     "Nota": "Licenca pessoal; pacote pode nao existir no WinGet.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Uso pessoal (nao comercial). Nao licenciado para empresas nesta edicao.",
+    "UrlLicenca": "https://www.avast.com/pt-br/eula"
   },
   {
     "Grupo": "Seguranca",
@@ -85,7 +105,9 @@
     "Id": "AVG AntiVirus Free",
     "Tipo": "BuscaNomeAV",
     "Nota": "Licenca pessoal; pacote pode nao existir no WinGet.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Uso pessoal (nao comercial). Nao licenciado para empresas nesta edicao.",
+    "UrlLicenca": "https://www.avg.com/en-us/eula"
   },
   {
     "Grupo": "Seguranca",
@@ -93,7 +115,9 @@
     "Id": "Malwarebytes.Malwarebytes",
     "Tipo": "Antivirus",
     "Nota": "Pode ativar protecao em tempo real no periodo de teste; verificar licenciamento.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Verifique se o plano contratado permite uso empresarial.",
+    "UrlLicenca": "https://www.malwarebytes.com/eula"
   },
   {
     "Grupo": "Seguranca",
@@ -101,7 +125,9 @@
     "Id": "ClamWin.ClamWin",
     "Tipo": "Scanner",
     "Nota": "Verificador sob demanda; nao substitui protecao residente.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Seguranca",
@@ -109,7 +135,9 @@
     "Id": "Cisco.ClamAV",
     "Tipo": "Scanner",
     "Nota": "Exige configuracao tecnica adicional.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Seguranca",
@@ -117,7 +145,9 @@
     "Id": "Malwarebytes.AdwCleaner",
     "Tipo": "Scanner",
     "Nota": "Ferramenta de verificacao sob demanda.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Seguranca",
@@ -125,7 +155,9 @@
     "Id": "SUPERAntiSpyware.SUPERAntiSpyware",
     "Tipo": "Scanner",
     "Nota": "Verificador de malware; conferir licenciamento.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Confirme as condicoes da edicao gratuita para uso empresarial.",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Seguranca",
@@ -133,7 +165,9 @@
     "Id": "Microsoft.Sysinternals.Autoruns",
     "Tipo": "Normal",
     "Nota": "Ferramenta administrativa para diagnostico.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "PDF e Escritorio",
@@ -141,7 +175,9 @@
     "Id": "SumatraPDF.SumatraPDF",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "PDF e Escritorio",
@@ -149,7 +185,9 @@
     "Id": "Adobe.Acrobat.Reader.64-bit",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "PDF e Escritorio",
@@ -157,7 +195,9 @@
     "Id": "TheDocumentFoundation.LibreOffice",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "PDF e Escritorio",
@@ -165,7 +205,9 @@
     "Id": "ONLYOFFICE.DesktopEditors",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "PDF e Escritorio",
@@ -173,7 +215,9 @@
     "Id": "Foxit.FoxitReader",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -181,7 +225,9 @@
     "Id": "Notepad++.Notepad++",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -189,7 +235,9 @@
     "Id": "Microsoft.PowerToys",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -197,7 +245,9 @@
     "Id": "voidtools.Everything",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -205,7 +255,9 @@
     "Id": "Microsoft.VisualStudioCode",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -213,7 +265,9 @@
     "Id": "WinMerge.WinMerge",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -221,7 +275,9 @@
     "Id": "AnyDeskSoftwareGmbH.AnyDesk",
     "Tipo": "Normal",
     "Nota": "Acesso remoto: configurar autenticacao e permissao.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Verifique as condicoes da licenca gratuita e do uso profissional.",
+    "UrlLicenca": "https://anydesk.com/en/terms"
   },
   {
     "Grupo": "Utilitarios",
@@ -229,7 +285,9 @@
     "Id": "TeamViewer.TeamViewer",
     "Tipo": "Normal",
     "Nota": "Uso empresarial pode exigir licenca comercial.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Versao gratuita e para uso pessoal; uso empresarial requer licenca adequada.",
+    "UrlLicenca": "https://www.teamviewer.com/en/legal/eula/"
   },
   {
     "Grupo": "Utilitarios",
@@ -237,7 +295,9 @@
     "Id": "Microsoft.WindowsApp",
     "Tipo": "Normal",
     "Nota": "Cliente Microsoft para desktops e recursos remotos.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -245,7 +305,9 @@
     "Id": "uvncbvba.UltraVnc",
     "Tipo": "Normal",
     "Nota": "Acesso remoto: nao habilitar sem configuracao de seguranca.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -253,7 +315,9 @@
     "Id": "WireGuard.WireGuard",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -261,7 +325,9 @@
     "Id": "RevoUninstaller.RevoUninstaller",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -269,7 +335,9 @@
     "Id": "Piriform.CCleaner",
     "Tipo": "Normal",
     "Nota": "Verificar licenca; evite limpeza automatica de registro.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "CCleaner Free e para uso pessoal. Confira licenciamento para uso empresarial.",
+    "UrlLicenca": "https://www.avast.com/pt-br/eula"
   },
   {
     "Grupo": "Multimidia",
@@ -277,7 +345,9 @@
     "Id": "VideoLAN.VLC",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -285,7 +355,9 @@
     "Id": "OBSProject.OBSStudio",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -293,7 +365,9 @@
     "Id": "Audacity.Audacity",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -301,7 +375,9 @@
     "Id": "Apple.iTunes",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -309,7 +385,9 @@
     "Id": "CodecGuide.K-LiteCodecPack.Full",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -317,7 +395,9 @@
     "Id": "Spotify.Spotify",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Multimidia",
@@ -325,7 +405,9 @@
     "Id": "HandBrake.HandBrake",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Comunicacao",
@@ -333,7 +415,9 @@
     "Id": "Zoom.Zoom",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Comunicacao",
@@ -341,7 +425,9 @@
     "Id": "Discord.Discord",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Comunicacao",
@@ -349,7 +435,9 @@
     "Id": "Microsoft.Teams",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Comunicacao",
@@ -357,7 +445,9 @@
     "Id": "Telegram.TelegramDesktop",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Comunicacao",
@@ -365,7 +455,9 @@
     "Id": "WhatsApp.WhatsApp",
     "Tipo": "Normal",
     "Nota": "Pode depender de requisitos da Microsoft Store/Windows.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -373,7 +465,9 @@
     "Id": "Python.Python.3.14",
     "Tipo": "Normal",
     "Nota": "Escolha apenas uma variante de Python 3.",
-    "Arquitetura": "x64"
+    "Arquitetura": "x64",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -381,7 +475,9 @@
     "Id": "Python.Python.3.14",
     "Tipo": "Normal",
     "Nota": "Apenas PCs com processador ARM64.",
-    "Arquitetura": "arm64"
+    "Arquitetura": "arm64",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -389,7 +485,9 @@
     "Id": "Python.Python.3.14",
     "Tipo": "Normal",
     "Nota": "WinGet escolhe arquitetura do computador.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -397,7 +495,9 @@
     "Id": "Python.Python.3.14",
     "Tipo": "Normal",
     "Nota": "Mesmo pacote Python 3; escolha apenas uma variante.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -405,7 +505,9 @@
     "Id": "Git.Git",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -413,7 +515,9 @@
     "Id": "GitHub.GitHubDesktop",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -421,7 +525,9 @@
     "Id": "Docker.DockerDesktop",
     "Tipo": "Normal",
     "Nota": "Requer virtualizacao; verificar requisitos e licenca.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Uso gratuito depende do porte e da receita da empresa; confira requisitos.",
+    "UrlLicenca": "https://docs.docker.com/subscription-billing/desktop-license/"
   },
   {
     "Grupo": "Desenvolvimento",
@@ -429,7 +535,9 @@
     "Id": "OpenJS.NodeJS.22",
     "Tipo": "Normal",
     "Nota": "Instale somente a versao necessaria ao projeto.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -437,7 +545,9 @@
     "Id": "OpenJS.NodeJS.24",
     "Tipo": "Normal",
     "Nota": "Instale somente a versao necessaria ao projeto.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -445,7 +555,9 @@
     "Id": "OpenJS.NodeJS.26",
     "Tipo": "Normal",
     "Nota": "Instale somente a versao necessaria ao projeto.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -453,7 +565,9 @@
     "Id": "TimKosse.FileZilla.Client",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Desenvolvimento",
@@ -461,7 +575,9 @@
     "Id": "SublimeHQ.SublimeText.4",
     "Tipo": "Normal",
     "Nota": "Licenca de uso continuado pode ser necessaria.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "Software comercial; licenca necessaria para uso continuado.",
+    "UrlLicenca": "https://www.sublimetext.com/eula"
   },
   {
     "Grupo": "Desenvolvimento",
@@ -469,7 +585,9 @@
     "Id": "PuTTY.PuTTY",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Imagem e Design",
@@ -477,7 +595,9 @@
     "Id": "KDE.Krita",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Imagem e Design",
@@ -485,7 +605,9 @@
     "Id": "BlenderFoundation.Blender",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Imagem e Design",
@@ -493,7 +615,9 @@
     "Id": "dotPDN.PaintDotNet",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Imagem e Design",
@@ -501,7 +625,9 @@
     "Id": "GIMP.GIMP",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Imagem e Design",
@@ -509,7 +635,9 @@
     "Id": "Inkscape.Inkscape",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Impressao 3D",
@@ -517,7 +645,9 @@
     "Id": "Bambulab.Bambustudio",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Impressao 3D",
@@ -525,7 +655,9 @@
     "Id": "Ultimaker.Cura",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Armazenamento",
@@ -533,7 +665,9 @@
     "Id": "Dropbox.Dropbox",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Armazenamento",
@@ -541,7 +675,9 @@
     "Id": "Google.GoogleDrive",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Armazenamento",
@@ -549,7 +685,9 @@
     "Id": "Microsoft.OneDrive",
     "Tipo": "Normal",
     "Nota": "",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Componentes",
@@ -557,7 +695,9 @@
     "Id": "Microsoft.DotNet.Framework.Runtime",
     "Tipo": "Normal",
     "Nota": "Ja incluido em muitas instalacoes do Windows 11; instale somente se necessario.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Componentes",
@@ -565,7 +705,9 @@
     "Id": "Microsoft.DotNet.DesktopRuntime.8",
     "Tipo": "Normal",
     "Nota": "Instale se um programa exigir esta versao.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Componentes",
@@ -573,7 +715,9 @@
     "Id": "EclipseAdoptium.Temurin.8.JDK",
     "Tipo": "Normal",
     "Nota": "Versao antiga. Apenas para programas que realmente exijam Java 8.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Componentes",
@@ -581,7 +725,9 @@
     "Id": "Microsoft.VCRedist.2015+.x64",
     "Tipo": "Normal",
     "Nota": "Bibliotecas redistribuiveis de programas de 64 bits.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Componentes",
@@ -589,6 +735,8 @@
     "Id": "Microsoft.VCRedist.2015+.x86",
     "Tipo": "Normal",
     "Nota": "Bibliotecas redistribuiveis de programas de 32 bits.",
-    "Arquitetura": ""
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   }
 ]

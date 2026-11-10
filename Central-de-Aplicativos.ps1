@@ -1,4 +1,4 @@
-﻿# Central de Aplicativos v8 - menu local para Windows 10/11
+﻿# Central de Aplicativos v8.2 - menu local para Windows 10/11
 # Requer WinGet para baixar e instalar. Sem site, sem dominio, sem servidor.
 # O TI deve conferir scripts e licencas antes de executar. Nao altera a politica de execucao global.
 param(
@@ -125,7 +125,7 @@ $script:statusPorApp = @{}
 $script:ultimoStatusWinget = ''
 $script:contador = 0
 $script:operacaoAtual = 'install'
-$script:session = Join-Path $env:TEMP ('CentralApps-v8-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+$script:session = Join-Path $env:TEMP ('CentralApps-v8.2-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
 [void](New-Item -ItemType Directory -Path $script:session -Force)
 $script:logFile = Join-Path $script:session 'Central.log'
 $script:pastaDownloads = Join-Path (Join-Path $env:USERPROFILE 'Downloads') 'CentralApps'
@@ -203,7 +203,8 @@ function MostrarAplicativos {
         foreach ($app in $visiveis) {
             $card = New-Object System.Windows.Forms.Panel
             $card.Width = $w
-            $card.Height = 60
+            $temAvisoLicenca = -not [string]::IsNullOrWhiteSpace([string]$app.AvisoLicenca)
+            $card.Height = if ($temAvisoLicenca) { 82 } else { 60 }
             $card.Margin = [System.Windows.Forms.Padding]::new(3,3,3,2)
             $card.BackColor = [System.Drawing.Color]::White
             $box = New-Object System.Windows.Forms.CheckBox
@@ -244,6 +245,20 @@ function MostrarAplicativos {
             $descricao.ForeColor = $script:cinza
             $descricao.Font = Fonte 8.5
             [void]$card.Controls.Add($descricao)
+            if ($temAvisoLicenca) {
+                $aviso = New-Object System.Windows.Forms.Label
+                $aviso.Text = 'LICENCA: ' + [string]$app.AvisoLicenca
+                $aviso.Location = [System.Drawing.Point]::new(36,54)
+                $aviso.Width = [Math]::Max(270,$w-55)
+                $aviso.Height = 19
+                $aviso.AutoEllipsis = $true
+                $aviso.ForeColor = [System.Drawing.Color]::FromArgb(155,85,24)
+                $aviso.Font = Fonte 8.3 $true
+                $aviso.Tag = 'Licenciamento: ' + [string]$app.UrlLicenca
+                $tipLicenca = New-Object System.Windows.Forms.ToolTip
+                $tipLicenca.SetToolTip($aviso, ($aviso.Text + "`r`n" + [string]$app.UrlLicenca))
+                [void]$card.Controls.Add($aviso)
+            }
             [void]$script:listaApps.Controls.Add($card)
         }
         $script:lblResultados.Text = "$($visiveis.Count) de $($script:apps.Count) programas"
@@ -347,8 +362,20 @@ function Executar([string]$operacao) {
         if (@($lista | Where-Object {$_.Nome -match 'AnyDesk|TeamViewer|UltraVNC'}).Count -gt 0) {
             if ([System.Windows.Forms.MessageBox]::Show('Acesso remoto deve ser autorizado e protegido pelo TI. Continuar?','Acesso remoto','YesNo','Warning') -ne [System.Windows.Forms.DialogResult]::Yes) { return }
         }
+        # Exibir avisos especificos para produtos com termos relevantes.
+        $comAviso = @($lista | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_.AvisoLicenca) })
+        if ($comAviso.Count -gt 0) {
+            $linhasLicenca = @($comAviso | ForEach-Object {
+                $linha = '- ' + [string]$_.Nome + ': ' + [string]$_.AvisoLicenca
+                if (-not [string]::IsNullOrWhiteSpace([string]$_.UrlLicenca)) { $linha += "`r`n  Termos: " + [string]$_.UrlLicenca }
+                $linha
+            })
+            $textoLicenca = "ATENCAO A LICENCAS DE TERCEIROS:`r`n`r`n" + ($linhasLicenca -join "`r`n`r`n")
+            $textoLicenca += "`r`n`r`nA Central nao fornece licencas nem armazena instaladores. Confira os termos dos desenvolvedores antes de continuar."
+            if ([System.Windows.Forms.MessageBox]::Show($textoLicenca,'Licenciamento de terceiros','YesNo','Warning') -ne [System.Windows.Forms.DialogResult]::Yes) { return }
+        }
         $desc = if ($operacao -eq 'download') { 'BAIXAR APENAS' } else { 'BAIXAR E INSTALAR' }
-        $msg = "$desc $($lista.Count) programa(s)?`r`n`r`nFonte: WinGet (winget).`r`nAlguns pacotes exigem permissao administrativa ou nao oferecem modo silencioso.`r`n`r`nContinuar?"
+        $msg = "$desc $($lista.Count) programa(s)?`r`n`r`nFonte: WinGet (winget).`r`nOs aplicativos pertencem aos seus fabricantes e o uso depende de suas licencas.`r`nO WinGet pode aceitar acordos de pacote automaticamente durante a operacao.`r`nAlguns pacotes exigem permissao administrativa ou nao oferecem modo silencioso.`r`n`r`nContinuar?"
         if ([System.Windows.Forms.MessageBox]::Show($msg,'Confirmacao','YesNo','Question') -ne [System.Windows.Forms.DialogResult]::Yes) { return }
         $script:operacaoAtual = $operacao
         $script:fila.Clear()
@@ -369,7 +396,7 @@ function Executar([string]$operacao) {
 
 # --- Interface: botoes de categoria, sem ListBox/SelectedIndex/SetSelected ---
 $form = New-Object System.Windows.Forms.Form
-$form.Text = 'Central de Aplicativos - TI | v8'
+$form.Text = 'Central de Aplicativos - TI | v8.2'
 $form.StartPosition = 'CenterScreen'
 $form.ClientSize = [System.Drawing.Size]::new(1120,730)
 $form.MinimumSize = [System.Drawing.Size]::new(880,620)
@@ -395,7 +422,7 @@ $h1.Font = Fonte 17 $true; $h1.ForeColor = [System.Drawing.Color]::White
 $h1.Location = [System.Drawing.Point]::new(24,12); $h1.AutoSize = $true
 [void]$header.Controls.Add($h1)
 $h2 = New-Object System.Windows.Forms.Label
-$h2.Text = 'Selecione os programas. Baixe ou instale diretamente pelo WinGet.'
+$h2.Text = 'Instalacao via WinGet. Programas de terceiros sujeitos as licencas dos fabricantes.'
 $h2.ForeColor = [System.Drawing.Color]::FromArgb(209,226,246)
 $h2.Font = Fonte 9.5; $h2.Location = [System.Drawing.Point]::new(26,51); $h2.AutoSize = $true
 [void]$header.Controls.Add($h2)
@@ -626,6 +653,6 @@ $form.Add_FormClosing({
 MostrarAplicativos
 Recontar
 $script:timer.Start()
-Log ("Central v8 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
+Log ("Central v8.2 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
 try { [void]$form.ShowDialog() }
 finally { $script:timer.Stop(); $script:timer.Dispose(); $form.Dispose() }
