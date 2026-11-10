@@ -3,7 +3,7 @@ if ($PSVersionTable.PSVersion.Major -lt 5) {
     throw 'Este iniciador exige Windows PowerShell 5.1 ou superior.'
 }
 
-$repositorio = 'JulioCesar-alt/central-aplicativos'
+$repositorio = 'JuliooCesar-alt/central-aplicativos'
 $nomePacote = 'Central-de-Aplicativos-Windows.zip'
 $nomeSomas = 'SHA256SUMS.txt'
 $api = "https://api.github.com/repos/$repositorio/releases/latest"
