@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title Central de Aplicativos - v8
+title Central de Aplicativos - v8.5.3
 if not exist "%~dp0Central-de-Aplicativos.ps1" (
  echo [ERRO] Central-de-Aplicativos.ps1 ausente. Extraia o ZIP por completo.
  pause
@@ -36,7 +36,7 @@ if not "%RESULTADO%"=="0" (
  echo.
  echo [ERRO] PowerShell encerrou com codigo %RESULTADO%.
  echo Para politica corporativa que exige scripts assinados, procure o TI.
- echo Logs: %%TEMP%%\CentralApps-v8-*
+ echo Logs: %%TEMP%%\CentralApps-v8.5.3-*
  pause
 )
 exit /b %RESULTADO%
