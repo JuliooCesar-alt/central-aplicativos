@@ -726,7 +726,7 @@ function Executar([string]$operacao) {
 
 # --- Interface: botoes de categoria, sem ListBox/SelectedIndex/SetSelected ---
 $form = New-Object System.Windows.Forms.Form
-$form.Text = 'Central de Aplicativos - TI | v8.5.3 (teste local)'
+$form.Text = 'Central de Aplicativos - TI | v8.6.5.6 | Desenvolvido por Julioo'
 $form.StartPosition = 'CenterScreen'
 $form.ClientSize = [System.Drawing.Size]::new(1190,780)
 $form.MinimumSize = [System.Drawing.Size]::new(980,640)
