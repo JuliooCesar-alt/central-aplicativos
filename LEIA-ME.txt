@@ -1,8 +1,128 @@
-CENTRAL DE APLICATIVOS v8.5.3
+﻿CENTRAL DE APLICATIVOS v8.6.5.6
+================================================
+Versao v8.6.5.6 com catalogo de 76 aplicativos e modulo de manutencao e drivers.
+Extraia todo o ZIP, confira os scripts e execute Iniciar-Central.cmd.
 
-Distribuicao via GitHub Releases.
-Instalacao e atualizacao de softwares de terceiros pelo WinGet, conforme as licencas dos fabricantes.
-O codigo nao contem os instaladores de terceiros.
+NOVO NA v8.6.5.2: SELECAO DE DRIVERS E LOG NA JANELA
+- Na aba Backup, clique em Listar / escolher drivers para ver os pacotes OEM.
+- Filtre digitando fornecedor, classe ou INF; use Marcar todos / Desmarcar todos.
+- Ao confirmar, somente os pacotes marcados serao incluidos em Drivers.zip.
+- O arquivo drivers-selecionados.csv mostra os pacotes solicitados.
+- O padrao continua TODOS os pacotes OEM, sem precisar abrir a lista.
+- A consulta sem elevacao pode mostrar uma lista PARCIAL; a interface avisa.
+- O painel inferior mostra andamento e log das operacoes sem consoles extras.
+- Se o Windows solicitar permissao administrativa (UAC), autorize somente
+  quando tiver iniciado uma operacao que exige administrador.
+- A barra de andamento e indeterminada durante etapas que nao informam percentual.
 
-Execute Iniciar-Central.cmd depois de extrair todos os arquivos, incluindo a pasta assets.
+BACKUP EM DOIS ZIPS SEPARADOS
+1. Abra Manutencao e Drivers > Abrir gerenciador > Backup antes de formatar.
+2. Selecione HD externo/pasta; marque arquivos do usuario, drivers ou ambos.
+3. A Central cria CentralBackup_NOMEPC_DATAHORA, contendo:
+   - Arquivos-Usuario.zip        (se arquivos selecionados)
+   - Arquivos-Usuario.zip.sha256 (hash do ZIP)
+   - Drivers.zip                 (se drivers selecionados)
+   - Drivers.zip.sha256          (hash do ZIP)
+   - computador.json, dispositivos.csv, drivers-instalados.csv
+   - backup-arquivos.log, backup-drivers.log, resultado-backup.json
+4. Os arquivos sao copiados primeiro para _Temporario; depois zipados e
+   verificados arquivo a arquivo por SHA-256. A pasta _Temporario sera
+   apagada somente depois da verificacao; em caso de falha ela e mantida.
+5. ZIP nao tem senha/criptografia. Guarde o HD com seguranca.
+6. A criacao temporaria exige espaco livre adicional no destino, que pode
+   chegar ao volume original + o volume compactado. Pode demorar.
+7. Nao formate antes de abrir e inspecionar os documentos em outro PC,
+   confirmar os logs e verificar que a unidade externa tem o backup.
 
+RESTAURAR DRIVERS
+- Aba Drivers e diagnostico > Restaurar Drivers.zip: escolha o ZIP
+  diretamente. A ferramenta confere SHA-256, se houver arquivo .sha256
+  ao lado, extrai para uma pasta temporaria com validacao de caminhos,
+  conta INF e usa PnPUtil. Depois tenta limpar a copia temporaria.
+- Aba Drivers e diagnostico > Instalar pasta INF: continua aceitando
+  o backup antigo em pasta Drivers, e pacotes INF oficiais extraidos.
+- Restauracao de drivers pode alterar dispositivos funcionando: teste
+  apenas em equipamento de laboratorio ou apos formatar.
+- Para recuperar DOCUMENTOS de Arquivos-Usuario.zip, abra o ZIP no
+  Explorador do Windows, extraia para uma pasta e copie os arquivos
+  desejados. Nao sobrescreva pastas do usuario sem revisar.
+- Nao ha instalacao de drivers encontrada em sites aleatorios. Windows
+  Update e pacotes de fabricantes oficiais continuam sendo a prioridade.
+
+SEGURANCA
+- Nao usa Robocopy /MIR, nao deleta originais de usuario.
+- Backup de drivers requer permissao de administrador.
+- Atualizacoes de software via WinGet e catalogo de 76 aplicativos mantidos.
+- O codigo da v8.6.5.2 foi revisado, mas a selecao e o log interno ainda
+  NAO foram executados em Windows real. Teste local antes de uso operacional.
+- Operacoes podem falhar em arquivos bloqueados, espaco livre insuficiente,
+  arquivos apenas online ou hardware sem drivers compatíveis.
+- ZIP SHA-256 detecta corrupcao acidental; nao autentica procedencia.
+
+Ajustes v8.6.5.2: rodape de logs em area reservada (sem sobreposicao); lista completa de drivers via DISM elevado; backup seletivo organizado por oemXX com auditoria de tamanho em pacotes-exportados.csv.
+
+NOVO NA v8.6.5.2 - DUAS VISOES PARA ESCOLHER DRIVERS
+- A selecao abre na visao Simples, agrupando pacotes por Video, Rede, Wi-Fi,
+  Bluetooth, Audio, Sistema e chipset, Touch/HID, USB, Armazenamento, Camera,
+  Impressoras, Firmware e Outros.
+- Expanda uma categoria para conferir os pacotes e clique na caixa do grupo
+  para marcar ou desmarcar todos os pacotes daquela classe.
+- A visao Avancada conserva a tabela de oemXX.inf, fornecedor e versao.
+- A selecao e unica nas duas visoes: alternar nao altera o que foi marcado.
+- Selecoes rapidas: Essenciais, Conectividade, Tudo e Nada. Os perfis sao
+  heuristicas por classe/nome, nao identificacao garantida do hardware.
+- A pesquisa funciona nos dois modos; clicar numa categoria seleciona todos
+  os pacotes dessa categoria, mesmo que a busca oculte parte deles.
+- Ao confirmar, Drivers.zip inclui somente os INF selecionados e suas
+  dependencias copiadas pelo PnPUtil. Drivers de video podem ser grandes.
+- Teste a interface e verifique o relatorio pacotes-exportados.csv.
+
+
+CORRECAO DE COMPATIBILIDADE v8.6.5.2 (12/11/2026)
+- O iniciador tolera sistemas de arquivos sem streams NTFS, evitando o
+  erro Get-Item/Zone.Identifier: Parametro incorreto.
+- A Central usa RemoteSigned somente na sessao PowerShell em execucao.
+  Isso nao altera a politica permanente do Windows nem ignora GPO.
+- O mesmo escopo se aplica aos processos de inventario, WinGet e manutencao,
+  inclusive quando um processo precisa ser executado como administrador.
+- Quando detectada a marca de origem da internet, solicita confirmacao
+  antes de desbloquear APENAS os dois scripts da Central.
+- Em ambientes que exigem assinatura digital, nao tente contornar a regra:
+  use uma versao assinada e aprovada pelo administrador de TI.
+- Caso haja bloqueio, consulte Get-ExecutionPolicy -List para diagnosticar.
+- Alteracoes de interface ou logica de backup: NENHUMA nesta revisao.
+
+
+AJUSTE DE INSTALACAO v8.6.5.2 (teste local)
+- WhatsApp Desktop atualizado para o ID oficial 9NKSQGP7F2NH na fonte msstore.
+- Os outros aplicativos continuam usando a fonte winget.
+- A instalacao registra logs detalhados do WinGet para facilitar o diagnostico.
+- Erros reconheciveis de hash e pacote ausente sao explicados na area de log.
+- NUNCA desative a verificacao de hash do WinGet para fazer uma instalacao funcionar.
+- Falhas do Chrome podem ser do manifesto WinGet, sem defeito na Central.
+- O backend da Microsoft Store, versao do Windows e politica corporativa podem
+  impedir a instalacao do WhatsApp em algumas maquinas.
+- Pasta de logs da Central: %%TEMP%%\CentralApps-v8.6.5.6-*
+- Para consultar fontes: winget source list
+- Para verificar Chrome sem instalar: winget show --id Google.Chrome --exact --source winget
+- Para verificar WhatsApp sem instalar: winget show --id 9NKSQGP7F2NH --source msstore
+- Nenhum comando de instalacao de drivers ou backup foi alterado nesta versao.
+
+
+REVISAO v8.6.5.6 - ERROS DE INSTALACAO (TESTE LOCAL)
+- Chrome: quando o WinGet retorna hash divergente, a Central explica o motivo e indica atualizacao da fonte winget ou download manual no site oficial do Google. NUNCA ignora o hash.
+- WhatsApp: quando a fonte Microsoft Store retorna 0x8a15005e, a Central orienta conferir data/hora, fontes, proxy/filtro HTTPS e App Installer. NUNCA ignora certificados TLS.
+- Link Ajuda: falhas de instalacao aparece ao lado da pesquisa de aplicativos.
+- NAO ha reparo automatico das fontes nem instalacao silenciosa alternativa. Os problemas dependem das fontes e do computador.
+- Backup, selecao e restauracao de drivers: sem alteracoes nesta revisao.
+- Publicacao no GitHub requer codigo atualizado em main e ZIP/sha256 da Release.
+
+
+NOVO NA v8.6.5.6 - DOIS PROGRAMAS ADICIONAIS
+- HopToDesk em Utilitarios: HopToDesk.HopToDesk (fonte winget).
+- Creality Print em Impressao 3D: Creality.CrealityPrint (fonte winget).
+- O catalogo passa de 74 para 76 entradas; verificacao no Windows pelo auditor.
+- Ambos sao instalados pelo fluxo WinGet ja existente, sem downloads de terceiros no ZIP.
+- Download e instalacao dependem do catalogo e da rede de cada computador.
+- Adobe Acrobat Reader nao recebeu alteracao de instalacao nesta versao.
+- Arquivos de backup, drivers e log interno foram preservados.

@@ -1,10 +1,10 @@
-﻿# Central de Aplicativos v8.5.3 - refinamento final local para Windows 10/11
+﻿# Central de Aplicativos v8.6.5.6 - refinamento visual local para Windows 10/11
 # Requer WinGet para baixar e instalar. Sem site, sem dominio, sem servidor.
 # O TI deve conferir scripts e licencas antes de executar. Nao altera a politica de execucao global.
 param(
     [switch]$Worker,
     [ValidateSet('install','download','upgrade','inventory')][string]$Operacao = 'install',
-    [string]$PacoteId = '', [string]$TipoPacote = '', [string]$ArquiteturaPacote = '',
+    [string]$PacoteId = '', [string]$TipoPacote = '', [string]$ArquiteturaPacote = '', [string]$FontePacote = 'winget',
     [string]$Saida = '', [string]$Resultado = '', [string]$PastaDownload = ''
 )
 
@@ -68,10 +68,11 @@ if ($Worker) {
             if ($PacoteId -notmatch '^[a-zA-Z0-9][a-zA-Z0-9 .+_-]{1,100}$') { throw 'Nome invalido.' }
         } elseif ($PacoteId -notmatch '^[a-zA-Z0-9][a-zA-Z0-9_.+-]{1,140}$') { throw 'ID de pacote invalido.' }
         $winget = Get-Command winget.exe -CommandType Application -ErrorAction Stop
+        if ($FontePacote -notin @('winget','msstore')) { throw 'Fonte WinGet nao permitida.' }
         $argsWinget = @($Operacao)
         if ($TipoPacote -eq 'BuscaNomeAV') { $argsWinget += @('--name',$PacoteId) }
         else { $argsWinget += @('--id',$PacoteId) }
-        $argsWinget += @('--exact','--source','winget','--accept-package-agreements','--accept-source-agreements','--disable-interactivity')
+        $argsWinget += @('--exact','--source',$FontePacote,'--accept-package-agreements','--accept-source-agreements','--disable-interactivity','--verbose-logs')
         if ($ArquiteturaPacote) {
             if ($ArquiteturaPacote -notin @('x64','x86','arm64','arm')) { throw 'Arquitetura nao suportada.' }
             $argsWinget += @('--architecture',$ArquiteturaPacote)
@@ -190,7 +191,7 @@ $script:inventarioRodando = $false
 $script:processoInventario = $null
 $script:inventarioPronto = $false
 $script:inicioPacote = Get-Date
-$script:session = Join-Path $env:TEMP ('CentralApps-v8.5.3-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+$script:session = Join-Path $env:TEMP ('CentralApps-v8.6.5.6-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
 [void](New-Item -ItemType Directory -Path $script:session -Force)
 $script:logFile = Join-Path $script:session 'Central.log'
 $script:pastaDownloads = Join-Path (Join-Path $env:USERPROFILE 'Downloads') 'CentralApps'
@@ -515,7 +516,7 @@ function IniciarInventario {
         $origem = Join-Path $PSScriptRoot 'Central-de-Aplicativos.ps1'
         $psi = New-Object System.Diagnostics.ProcessStartInfo
         $psi.FileName = Join-Path $PSHOME 'powershell.exe'
-        $psi.Arguments = '-NoLogo -NoProfile -NonInteractive -File "' + $origem + '" -Worker -Operacao inventory -Saida "' + $script:logInventario + '" -Resultado "' + $script:arquivoInventario + '"'
+        $psi.Arguments = '-NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -File "' + $origem + '" -Worker -Operacao inventory -Saida "' + $script:logInventario + '" -Resultado "' + $script:arquivoInventario + '"'
         $psi.UseShellExecute = $false
         $psi.CreateNoWindow = $true
         $script:processoInventario = New-Object System.Diagnostics.Process
@@ -643,9 +644,9 @@ function ProximoPacote {
     $runName = Split-Path -Path $script:session -Leaf
     $downloadDest = Join-Path (Join-Path $script:pastaDownloads $runName) $serial
     $origem = Join-Path $PSScriptRoot 'Central-de-Aplicativos.ps1'
-    $argString = '-NoLogo -NoProfile -NonInteractive -File "' + $origem + '" -Worker' +
+    $argString = '-NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -File "' + $origem + '" -Worker' +
         ' -Operacao ' + $script:operacaoAtual +
-        ' -PacoteId "' + $app.Id + '" -TipoPacote "' + $app.Tipo + '"' +
+        ' -PacoteId "' + $app.Id + '" -TipoPacote "' + $app.Tipo + '" -FontePacote "' + $(if ([string]$app.Fonte -eq 'msstore') { 'msstore' } else { 'winget' }) + '"' +
         ' -ArquiteturaPacote "' + $app.Arquitetura + '"' +
         ' -Saida "' + $script:logPacote + '" -Resultado "' + $script:resultadoPacote + '"' +
         ' -PastaDownload "' + $downloadDest + '"'
@@ -803,15 +804,66 @@ $tabAplicativos = New-Object System.Windows.Forms.TabPage
 $tabAplicativos.Text = 'Aplicativos'
 $tabAplicativos.BackColor = $script:fundo
 $tabAplicativos.Padding = [System.Windows.Forms.Padding]::new(0)
+$tabManutencao = New-Object System.Windows.Forms.TabPage
+$tabManutencao.Text = 'Manutencao e Drivers'
+$tabManutencao.BackColor = [System.Drawing.Color]::White
 $tabAvisos = New-Object System.Windows.Forms.TabPage
 $tabAvisos.Text = 'Avisos e Licenças'
 $tabAvisos.BackColor = [System.Drawing.Color]::White
 $tabAvisos.Padding = [System.Windows.Forms.Padding]::new(0)
 [void]$script:tabs.TabPages.Add($tabAplicativos)
+[void]$script:tabs.TabPages.Add($tabManutencao)
 [void]$script:tabs.TabPages.Add($tabAvisos)
 [void]$outer.Controls.Add($script:tabs,0,1)
 $center.Margin = [System.Windows.Forms.Padding]::new(8,10,8,6)
 $tabAplicativos.Controls.Add($center)
+
+# A manutencao roda em uma janela independente para preservar a interface principal.
+$manuPainel = New-Object System.Windows.Forms.TableLayoutPanel
+$manuPainel.Dock = 'Fill'
+$manuPainel.ColumnCount = 1; $manuPainel.RowCount = 5
+$manuPainel.Padding = [System.Windows.Forms.Padding]::new(30,22,30,18)
+foreach ($altura in @(55,46,65,60,0)) {
+    if ($altura -eq 0) { [void]$manuPainel.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Percent,100)) }
+    else { [void]$manuPainel.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Absolute,$altura)) }
+}
+$tabManutencao.Controls.Add($manuPainel)
+$manuTitulo = New-Object System.Windows.Forms.Label
+$manuTitulo.Text = 'Preparacao e recuperacao de computadores'
+$manuTitulo.Font = Fonte 15 $true
+$manuTitulo.ForeColor = $script:azulEscuro
+$manuTitulo.Dock = 'Fill'
+$manuPainel.Controls.Add($manuTitulo,0,0)
+$manuDescricao = New-Object System.Windows.Forms.Label
+$manuDescricao.Text = 'Backup de arquivos e drivers em HD externo, diagnostico de hardware e instalacao de pacotes INF oficiais.'
+$manuDescricao.ForeColor = $script:cinza
+$manuDescricao.Dock = 'Fill'
+$manuPainel.Controls.Add($manuDescricao,0,1)
+$manuBotao = New-Object System.Windows.Forms.Button
+$manuBotao.Text = 'Abrir gerenciador de backup e drivers'
+$manuBotao.Width = 310; $manuBotao.Height=42
+$manuBotao.BackColor = $script:azul
+$manuBotao.ForeColor = [Drawing.Color]::White
+$manuBotao.FlatStyle = 'Flat'
+$manuBotao.Font = Fonte 10 $true
+$manuPainel.Controls.Add($manuBotao,0,2)
+$manuBotao.Add_Click({
+    try {
+        $modulo = Join-Path $PSScriptRoot 'Manutencao-Drivers.ps1'
+        if (-not (Test-Path -LiteralPath $modulo)) { throw 'Manutencao-Drivers.ps1 nao encontrado. Extraia todo o ZIP.' }
+        $ps = Join-Path $PSHOME 'powershell.exe'
+        Start-Process -FilePath $ps -ArgumentList ('-NoLogo -NoProfile -STA -ExecutionPolicy RemoteSigned -WindowStyle Hidden -File "' + $modulo + '"') -WindowStyle Hidden -ErrorAction Stop
+    } catch { [void][System.Windows.Forms.MessageBox]::Show($_.Exception.Message,'Manutencao','OK','Error') }
+})
+$manuObservacao = New-Object System.Windows.Forms.Label
+$manuObservacao.Text = 'As consultas nao alteram drivers. Backup e instalacao INF exigem confirmacao; alteracoes de drivers requerem permissao administrativa.'
+$manuObservacao.Dock = 'Fill';$manuObservacao.ForeColor = $script:cinza
+$manuPainel.Controls.Add($manuObservacao,0,3)
+$manuAviso = New-Object System.Windows.Forms.Label
+$manuAviso.Text = 'Antes de formatar: confirme se o HD externo contem os arquivos, o relatorio e os drivers exportados. Backup da Central nao substitui imagem do sistema nem recuperacao de aplicativos, senhas e licencas.'
+$manuAviso.Dock = 'Top';$manuAviso.Height=82
+$manuAviso.ForeColor = [Drawing.Color]::FromArgb(136,92,32)
+$manuPainel.Controls.Add($manuAviso,0,4)
 
 # Conteudo informativo, separado da selecao de aplicativos.
 $avisoLayout = New-Object System.Windows.Forms.TableLayoutPanel
@@ -996,10 +1048,64 @@ $searchArea.Padding = [System.Windows.Forms.Padding]::new(16,9,16,8)
 [void]$searchArea.ColumnStyles.Add([System.Windows.Forms.ColumnStyle]::new([System.Windows.Forms.SizeType]::Absolute,155))
 [void]$searchArea.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Absolute,25))
 [void]$searchArea.RowStyles.Add([System.Windows.Forms.RowStyle]::new([System.Windows.Forms.SizeType]::Percent,100))
+$topSearchLinks = New-Object System.Windows.Forms.FlowLayoutPanel
+$topSearchLinks.Dock = 'Fill'
+$topSearchLinks.WrapContents = $false
+$topSearchLinks.FlowDirection = 'LeftToRight'
+$topSearchLinks.Margin = [System.Windows.Forms.Padding]::new(0)
 $lblPesquisa = New-Object System.Windows.Forms.Label
 $lblPesquisa.Text='PESQUISAR'; $lblPesquisa.ForeColor=$script:cinza
-$lblPesquisa.Font=Fonte 8.6 $true; $lblPesquisa.Dock='Fill'
-$searchArea.Controls.Add($lblPesquisa,0,0)
+$lblPesquisa.Font=Fonte 8.6 $true; $lblPesquisa.AutoSize=$true
+$lblPesquisa.Margin = [System.Windows.Forms.Padding]::new(0,4,24,0)
+[void]$topSearchLinks.Controls.Add($lblPesquisa)
+$ajudaWinGet = New-Object System.Windows.Forms.LinkLabel
+$ajudaWinGet.Text = 'Ajuda: falhas de instalacao'
+$ajudaWinGet.Font = Fonte 8.5
+$ajudaWinGet.LinkColor = $script:azul
+$ajudaWinGet.AutoSize = $true
+$ajudaWinGet.Margin = [System.Windows.Forms.Padding]::new(0,3,0,0)
+$ajudaWinGet.Add_LinkClicked({
+    $orientacoes = @'
+DIAGNOSTICO DE INSTALACOES - WINGET
+
+CHROME: se aparecer "Installer hash does not match", o instalador baixado nao corresponde ao manifesto WinGet. Nao ignore o hash. Para atualizar o catalogo, execute em um PowerShell:
+  winget source update --name winget
+Se continuar, use o site oficial: https://www.google.com/chrome/
+
+WHATSAPP: o erro 0x8a15005e indica que a fonte Microsoft Store nao aceitou o certificado apresentado. Confira a data/hora do PC e execute:
+  winget source list
+  winget source update --name msstore
+Se persistir, verifique com o TI proxy, inspecao HTTPS e App Installer. Abra a loja oficial:
+  https://apps.microsoft.com/detail/9NKSQGP7F2NH
+
+ADOBE READER: o erro InternetOpenUrl() failed (por exemplo 0x80072FED) indica falha de acesso ao endereco solicitado pelo WinGet.
+O ID Adobe.Acrobat.Reader.64-bit e valido. Confira os detalhes do log e tente abrir o endereco oficial pelo navegador:
+  https://get.adobe.com/reader/enterprise/
+O instalador oficial pode ser baixado manualmente pelo TI e executado apos verificar procedencia e assinatura digital Adobe.
+Se o navegador tambem falhar, investigue DNS, proxy, inspecao HTTPS e acesso aos dominios de download da Adobe na rede.
+
+A Central nao desativa a protecao por hash nem validacao de certificados. Os links oficiais sao abertos manualmente e a instalacao depende da loja/fabricante.
+'@
+    [void][System.Windows.Forms.MessageBox]::Show($orientacoes,'Ajuda para falhas de instalacao','OK','Information')
+})
+[void]$topSearchLinks.Controls.Add($ajudaWinGet)
+# Link explicito ao distribuidor oficial. Abertura somente sob clique do operador.
+$adobeLink = New-Object System.Windows.Forms.LinkLabel
+$adobeLink.Text = 'Adobe Reader: download oficial'
+$adobeLink.Font = Fonte 8.5
+$adobeLink.LinkColor = $script:azul
+$adobeLink.AutoSize = $true
+$adobeLink.Margin = [System.Windows.Forms.Padding]::new(20,3,0,0)
+$adobeLink.Add_LinkClicked({
+    try {
+        Start-Process -FilePath 'https://get.adobe.com/reader/enterprise/' -ErrorAction Stop
+        Log 'Site oficial da Adobe aberto pelo operador para download manual do Acrobat Reader.'
+    } catch {
+        [void][System.Windows.Forms.MessageBox]::Show(('Nao foi possivel abrir a pagina oficial: ' + $_.Exception.Message), 'Adobe Reader', 'OK', 'Warning')
+    }
+})
+[void]$topSearchLinks.Controls.Add($adobeLink)
+$searchArea.Controls.Add($topSearchLinks,0,0)
 $script:chkSomenteSelecionados = New-Object System.Windows.Forms.CheckBox
 $script:chkSomenteSelecionados.Text = 'Somente selecionados'
 $script:chkSomenteSelecionados.Dock = 'Fill'
@@ -1198,6 +1304,43 @@ $script:timer.Add_Tick({
             $script:falhas++
             DefinirStatus ([string]$script:atual.Chave) 'Falhou - ver log'
             Log ('FALHOU: ' + $script:atual.Nome + '; codigo: ' + $code)
+            if (Test-Path -LiteralPath $script:logPacote) {
+                $falhaTexto = Get-Content -LiteralPath $script:logPacote -Raw -ErrorAction SilentlyContinue
+                if ($falhaTexto -match '(?i)hash.{0,55}(does not match|mismatch|n.o coincide|n.o corresponde|divergente)|installer hash does not match') {
+                    Log 'DIAGNOSTICO HASH: o instalador recebido nao corresponde ao hash cadastrado no WinGet. Nao desative a verificacao.'
+                    Log 'ACAO: em um PowerShell, tente winget source update --name winget; depois repita a consulta. Uma atualizacao do manifesto pode ser necessaria.'
+                    if ([string]$script:atual.Id -eq 'Google.Chrome') {
+                        Log 'ALTERNATIVA MANUAL: obter o Chrome diretamente do site oficial https://www.google.com/chrome/ (a Central nao baixa esse arquivo automaticamente).'
+                    }
+                    DefinirStatus ([string]$script:atual.Chave) 'Hash divergente - ver log'
+                } elseif ($falhaTexto -match '(?i)0x8a15005e|server certificate did not match|certificado do servidor.{0,90}(correspond|inesperad)') {
+                    Log 'DIAGNOSTICO CERTIFICADO: a fonte Microsoft Store recusou o certificado do servidor (0x8a15005e). Nao desative validacao TLS ou certificados.'
+                    Log 'ACAO: confira data/hora do Windows e winget source list; depois execute winget source update --name msstore. Se persistir, o TI deve verificar proxy/filtro HTTPS e App Installer.'
+                    if ([string]$script:atual.Id -eq '9NKSQGP7F2NH') {
+                        Log 'ALTERNATIVA MANUAL: abra o WhatsApp na Microsoft Store oficial https://apps.microsoft.com/detail/9NKSQGP7F2NH .'
+                    }
+                    DefinirStatus ([string]$script:atual.Chave) 'Erro certificado Store'
+                } elseif ($falhaTexto -match '(?i)No package found matching input criteria|Nenhum pacote.{0,50}encontrado|Nenhum pacote correspondente') {
+                    Log 'DIAGNOSTICO: pacote nao encontrado na fonte configurada. Confira a disponibilidade da fonte WinGet ou Microsoft Store.'
+                    DefinirStatus ([string]$script:atual.Chave) 'Pacote nao encontrado'
+                } elseif ([string]$script:atual.Fonte -eq 'msstore') {
+                    Log 'DIAGNOSTICO: instalacao via Microsoft Store falhou. Verifique fonte msstore, requisitos do Windows e restricoes corporativas.'
+                    Log 'CONSULTA: winget source list ; winget show --id 9NKSQGP7F2NH --source msstore'
+                }
+                if ([string]$script:atual.Id -eq 'Adobe.Acrobat.Reader.64-bit') {
+                    if ($falhaTexto -match '(?i)InternetOpenUrl\(\) failed|0x80072fed|0x80072efd') {
+                        Log 'ADOBE - FALHA DE DOWNLOAD: o WinGet nao conseguiu acessar um endereco solicitado (InternetOpenUrl). O ID do pacote continua valido.'
+                        Log 'ACAO: abra Adobe Reader: download oficial (acima da lista) e obtenha o instalador diretamente do dominio adobe.com, apos conferencia do TI.'
+                        Log 'DIAGNOSTICO: se nem o navegador abrir o download, verifique rede, proxy, filtro HTTPS, DNS e acesso aos dominios da Adobe. Nao desative TLS/certificados.'
+                        DefinirStatus ([string]$script:atual.Chave) 'Falha de download Adobe'
+                    } elseif ($falhaTexto -match '(?i)exit.?code.{0,16}1603|codigo.{0,16}1603|erro.{0,16}1603') {
+                        Log 'ADOBE READER: falha 1603 do instalador. Verifique se o Acrobat Pro ja esta instalado, se ha processo Adobe aberto ou instalacao pendente; nao desinstale produtos automaticamente.'
+                    } else {
+                        Log 'ADOBE READER: ID WinGet confirmado. Consulte o codigo de erro e o log detalhado do WinGet; link para instalador oficial disponivel acima da lista.'
+                    }
+                    Log 'CONSULTA SEGURA: winget show --id Adobe.Acrobat.Reader.64-bit --exact --source winget'
+                }
+            }
         }
         if (Test-Path -LiteralPath $script:logPacote) {
             $linhas=@(Get-Content -LiteralPath $script:logPacote -ErrorAction SilentlyContinue | Where-Object { $_.Trim() } | Select-Object -Last 5)
@@ -1226,7 +1369,7 @@ $form.Add_FormClosing({
 MostrarAplicativos
 Recontar
 $script:timer.Start()
-Log ("Central v8.5.3 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
+Log ("Central v8.6.5.6 aberta. $($script:apps.Count) programas. Logs em: $($script:session)")
 $form.Add_Shown({ IniciarInventario })
 try { [void]$form.ShowDialog() }
 finally { $script:timer.Stop(); $script:timer.Dispose(); $form.Dispose() }

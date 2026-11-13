@@ -272,12 +272,22 @@
   {
     "Grupo": "Utilitarios",
     "Nome": "AnyDesk",
-    "Id": "AnyDeskSoftwareGmbH.AnyDesk",
+    "Id": "AnyDesk.AnyDesk",
     "Tipo": "Normal",
-    "Nota": "Acesso remoto: configurar autenticacao e permissao.",
+    "Nota": "Acesso remoto: configurar autenticacao e permissao. ID atualizado; confirmar no WinGet da maquina.",
     "Arquitetura": "",
     "AvisoLicenca": "Verifique as condicoes da licenca gratuita e do uso profissional.",
     "UrlLicenca": "https://anydesk.com/en/terms"
+  },
+  {
+    "Grupo": "Utilitarios",
+    "Nome": "HopToDesk",
+    "Id": "HopToDesk.HopToDesk",
+    "Tipo": "Normal",
+    "Nota": "Acesso remoto; utilize somente com autorizacao do proprietario do dispositivo.",
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
   },
   {
     "Grupo": "Utilitarios",
@@ -452,12 +462,13 @@
   {
     "Grupo": "Comunicacao",
     "Nome": "WhatsApp Desktop",
-    "Id": "WhatsApp.WhatsApp",
+    "Id": "9NKSQGP7F2NH",
     "Tipo": "Normal",
-    "Nota": "Pode depender de requisitos da Microsoft Store/Windows.",
+    "Nota": "App oficial da Microsoft Store; precisa da fonte msstore e dos servicos de instalacao do Windows.",
     "Arquitetura": "",
     "AvisoLicenca": "",
-    "UrlLicenca": ""
+    "UrlLicenca": "",
+    "Fonte": "msstore"
   },
   {
     "Grupo": "Desenvolvimento",
@@ -655,6 +666,16 @@
     "Id": "Ultimaker.Cura",
     "Tipo": "Normal",
     "Nota": "",
+    "Arquitetura": "",
+    "AvisoLicenca": "",
+    "UrlLicenca": ""
+  },
+  {
+    "Grupo": "Impressao 3D",
+    "Nome": "Creality Print",
+    "Id": "Creality.CrealityPrint",
+    "Tipo": "Normal",
+    "Nota": "Fatiador oficial Creality para impressoras 3D FDM. Download pode ser grande.",
     "Arquitetura": "",
     "AvisoLicenca": "",
     "UrlLicenca": ""
