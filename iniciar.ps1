@@ -75,7 +75,7 @@ try {
         Write-Host 'Abertura cancelada.'
         return
     }
-    & powershell.exe -NoLogo -NoProfile -STA -File $principal
+    & powershell.exe -NoLogo -NoProfile -STA -ExecutionPolicy RemoteSigned -File $principal
     if ($LASTEXITCODE -ne 0) {
         Write-Warning ('A Central encerrou com o codigo ' + $LASTEXITCODE + '.')
     }
